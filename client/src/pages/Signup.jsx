@@ -47,7 +47,7 @@ const Signup = () => {
           type="text"
           name="username"
           placeholder="Username"
-          className="border-2 rounded-lg"
+          className="border-2 rounded-lg p-1"
           id="username"
           onChange={handleChange}
         />
@@ -55,7 +55,7 @@ const Signup = () => {
           type="email"
           name="email"
           placeholder="Email"
-          className="border-2 rounded-lg"
+          className="border-2 rounded-lg p-1"
           id="email"
           onChange={handleChange}
         />
@@ -63,12 +63,12 @@ const Signup = () => {
           type="password"
           name="password"
           placeholder="Password"
-          className="border-2 rounded-lg"
+          className="border-2 rounded-lg p-1"
           id="password"
           onChange={handleChange}
         />
         <button
-          className="bg-slate-500 text-white p-3 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
+          className="bg-slate-500 text-white p-1 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
           disabled={loading}
         >
           {loading ? "Loading..." : "Sign up"}
