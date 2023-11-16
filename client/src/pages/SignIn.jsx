@@ -61,7 +61,7 @@ const SignIn = () => {
           onChange={handleChange}
         />
         <button
-          className="bg-slate-500 text-white p-1 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
+          className="bg-blue-400 text-white p-1 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
           disabled={loading}
         >
           {loading ? "Loading..." : "Sign in"}
@@ -71,7 +71,7 @@ const SignIn = () => {
       <div className="flex gap-2 mt-5">
         <p>New user?</p>
         <Link to="/sign-up">
-          <span className="text-blue-500">Sign up</span>
+          <span className="bg-blue-800 text-blue-100">Sign up</span>
         </Link>
       </div>
       { error && <p className="text-red-500">{error}</p> }

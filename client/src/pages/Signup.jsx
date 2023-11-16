@@ -69,7 +69,7 @@ const Signup = () => {
           onChange={handleChange}
         />
         <button
-          className="bg-slate-500 text-white p-1 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
+          className="bg-blue-800 text-blue-100 p-1 rounded-lg uppercase hover:opacity-50 disabled:opacity-50"
           disabled={loading}
         >
           {loading ? "Loading..." : "Sign up"}
