@@ -71,7 +71,7 @@ const SignIn = () => {
       <div className="flex gap-2 mt-5">
         <p>New user?</p>
         <Link to="/sign-up">
-          <span className="bg-blue-800 text-blue-100">Sign up</span>
+          <span className="text-blue-100">Sign up</span>
         </Link>
       </div>
       { error && <p className="text-red-500">{error}</p> }
