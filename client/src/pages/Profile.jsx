@@ -23,6 +23,8 @@ const Profile = () => {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -121,6 +123,22 @@ const Profile = () => {
     }
   }
 
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -212,6 +230,41 @@ const Profile = () => {
       </div>
       <p className="text-red-300 mt-5">{error ? error : ""}</p>
       <p className="text-blue-300">{updateSuccess ? "Profile updated successfully!" : ""}</p>
+      <button
+        onClick={handleShowListings}
+        className="w-full"
+      >
+        Show Listings
+      </button>
+      <p>{showListingsError ? "Error fetching listings" : ""}</p>
+      {
+        userListings && userListings.length > 0 && userListings.map((listing) => (
+          <div key={listing._id} className="border-blue-300 bg-blue-300 p-2 gap-4 items-center flex justify-between">
+            <Link
+              to={`/listing/${listing._id}`}
+              className="flex gap-4 items-center"
+            >
+              <img
+                src={listing.imageUrls[0]}
+                alt="listing"
+                className="h-16 w-16 object-contain"
+              />
+              <p className="font-semibold text-blue-800 flex-1 capitalize hover:underline truncate">{listing.name}</p>
+            </Link>
+            <div className="gap-4 flex">
+              <button
+                className="bg-blue-800 text-blue-100 p-2 rounded-lg uppercase hover:opacity-50"
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50"
+                // onClick={() => handleDeleteListing(listing._id)}
+              >Delete</button>
+            </div>
+          </div>
+        ))
+      }
     </div>
   )
 }
