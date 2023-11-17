@@ -7,6 +7,6 @@ body {
     color: #BFDBF9;
 }
 
-input {
+input, textarea {
     color: black;
 }
