@@ -4,5 +4,9 @@
 
 body {
     background-color: rgb(37, 23, 88);
-    color: #60A5FA;
+    color: #BFDBF9;
+}
+
+input {
+    color: black;
 }
