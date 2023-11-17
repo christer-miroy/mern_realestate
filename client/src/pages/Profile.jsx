@@ -2,7 +2,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage,  ref, uploadBytesResumable } from "firebase/storage"
 import { app } from "../firebase";
-import { updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice";
+import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess
+} from "../redux/user/userSlice";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -69,6 +76,27 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+    }
+  }
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   }
 
@@ -139,7 +167,12 @@ const Profile = () => {
       </form>
       <div className="flex justify-between mt-5">
         <span>
-          <button className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50">Delete Account</button>
+          <button
+            className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50"
+            onClick={handleDeleteUser}
+          >
+              Delete Account
+            </button>
         </span>
         <span>
           <button className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50">Sign Out</button>
