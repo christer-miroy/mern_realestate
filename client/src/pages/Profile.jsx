@@ -274,11 +274,13 @@ const Profile = () => {
               <p className="font-semibold text-blue-800 flex-1 capitalize hover:underline truncate">{listing.name}</p>
             </Link>
             <div className="gap-4 flex flex-col">
-              <button
-                className="bg-blue-800 text-blue-100 p-2 rounded-lg uppercase hover:opacity-50"
-              >
-                Edit
-              </button>
+              <Link to={`/update-listing/${listing._id}`}>
+                <button
+                  className="bg-blue-800 text-blue-100 p-2 rounded-lg uppercase hover:opacity-50"
+                >
+                  Edit
+                </button>
+              </Link>
               <button
                 className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50"
                 onClick={() => handleDeleteListing(listing._id)}
