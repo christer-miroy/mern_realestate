@@ -139,6 +139,28 @@ const Profile = () => {
     }
   }
 
+  const handleDeleteListing = async (id) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return;
+      }
+
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== id)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+    
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -239,7 +261,7 @@ const Profile = () => {
       <p>{showListingsError ? "Error fetching listings" : ""}</p>
       {
         userListings && userListings.length > 0 && userListings.map((listing) => (
-          <div key={listing._id} className="border-blue-300 bg-blue-300 p-2 gap-4 items-center flex justify-between">
+          <div key={listing._id} className="my-10 rounded-lg bg-blue-300 p-4 gap-4 items-center flex justify-between">
             <Link
               to={`/listing/${listing._id}`}
               className="flex gap-4 items-center"
@@ -251,7 +273,7 @@ const Profile = () => {
               />
               <p className="font-semibold text-blue-800 flex-1 capitalize hover:underline truncate">{listing.name}</p>
             </Link>
-            <div className="gap-4 flex">
+            <div className="gap-4 flex flex-col">
               <button
                 className="bg-blue-800 text-blue-100 p-2 rounded-lg uppercase hover:opacity-50"
               >
@@ -259,7 +281,7 @@ const Profile = () => {
               </button>
               <button
                 className="bg-red-700 text-red-100 p-2 rounded-lg uppercase hover:opacity-50"
-                // onClick={() => handleDeleteListing(listing._id)}
+                onClick={() => handleDeleteListing(listing._id)}
               >Delete</button>
             </div>
           </div>
