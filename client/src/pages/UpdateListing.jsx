@@ -191,7 +191,7 @@ const UpdateListing = () => {
                 discountedPrice: 0,
             });
             setError(null);
-            navigate(`/listings/${data._id}`);
+            navigate(`/profile`);
         } catch (error) {
             setError(error.message);
             setLoading(false);
