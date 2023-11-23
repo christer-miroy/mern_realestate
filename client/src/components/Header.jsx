@@ -1,9 +1,30 @@
+import { useEffect, useState } from 'react';
 import {FaSearch} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const { currentUser } = useSelector((state) => state.user);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // get url inside the search
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchTerm', searchTerm);
+        const searchQuery = urlParams.toString();
+        navigate(`/search?${searchQuery}`);
+    };
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchTermFromUrl = urlParams.get('searchTerm');
+        if (searchTermFromUrl) {
+            setSearchTerm(searchTermFromUrl);
+        }
+    }, [location.search])
 
   return (
     <header className="bg-blue-800 shadow-md">
@@ -12,15 +33,19 @@ const Header = () => {
                 <span className="text-blue-200">MERN</span>
                 <span className="text-blue-400">Estate</span>
             </h1>
-            <form action="" className="bg-blue-100 rounded-large p-3 flex items-center">
+            <form onSubmit={handleSubmit} className="bg-blue-100 rounded-lg p-3 flex items-center">
                 <input
                     type="text"
                     name="search"
                     id=""
                     placeholder="Search"
                     className="bg-transparent focus:outline-none w-24 sm:w-64"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <FaSearch className='text-blue-500' />
+                <button>
+                    <FaSearch className='text-blue-500' />
+                </button>
             </form>
             <ul className='flex gap-3'>
                 <Link to="/">
