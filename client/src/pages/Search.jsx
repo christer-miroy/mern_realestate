@@ -17,8 +17,7 @@ const Search = () => {
 
     const [loading, setLoading] = useState(false);
     const [listings, setListings] = useState([]);
-
-    console.log(listings);
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
         // updated url
@@ -53,9 +52,15 @@ const Search = () => {
         // fetch data
         const fetchListings = async () => {
             setLoading(true);
+            setShowMore(false);
             const searchQuery = urlParams.toString();
             const res = await fetch(`/api/listing/get?${searchQuery}`);
             const data = await res.json();
+            if (data.length > 8) {
+                setShowMore(true);
+            } else {
+                setShowMore(false);
+            }
             setListings(data);
             setLoading(false);
         };
@@ -114,6 +119,20 @@ const Search = () => {
         const searchQuery = urlParams.toString();
 
         navigate(`/search?${searchQuery}`);
+    }
+
+    const onShowMoreClick = async () => {
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = await res.json();
+        if (data.length < 9) {
+        setShowMore(false);
+        }
+        setListings([...listings, ...data]);
     }
 
   return (
@@ -242,7 +261,20 @@ const Search = () => {
                         />
                     ))
                 }
-            </div>
+                
+            </div>            
+            {
+                showMore && (
+                    <div className="flex justify-center">
+                        <button
+                        className="bg-blue-400 text-blue-900 rounded-lg p-3 m-2 font-semibold text-center w-auto uppercase hover:underline"
+                        onClick={onShowMoreClick}
+                        >
+                        Show More
+                        </button>
+                    </div>
+                )
+            }
         </div>
     </div>
   )
