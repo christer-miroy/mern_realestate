@@ -38,8 +38,8 @@ app.use('/api/listing', listingRouter);
 app.use(express.static(path.join(__dirname, '/client/dist'))); // for deployment - create dist folder
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
+    res.sendFile(path.join(__dirname, '/client/dist/index.html'));
+  })
 
 // error middleware
 app.use((err, req, res, next) => {
