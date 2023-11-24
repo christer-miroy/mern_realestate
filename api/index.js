@@ -19,7 +19,7 @@ mongoose
     })
 ;
 
-const __dirname = path.resolve();
+const __dirname = path.resolve(); //create dynamic directory name for deployment
 
 const app = express();
 app.use(express.json());
@@ -35,10 +35,10 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 
-// for deployment 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(express.static(path.join(__dirname, '/client/dist'))); // for deployment - create dist folder
+
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client', 'dist', 'index.html')); //dynamic directory name
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
 // error middleware
