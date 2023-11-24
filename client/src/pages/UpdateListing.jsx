@@ -402,7 +402,7 @@ const UpdateListing = () => {
                 {/* create listing button */}
                 <button
                     disabled={loading || uploading}
-                    className="p-3 bg-blue-500 text-blue-100 rounded-lg uppercase hover:opacity-50 disabled:opacity-50">{loading ? 'Loading...' : 'Update Listing'}
+                    className="p-3 bg-blue-500 text-blue-100 rounded-lg uppercase hover:opacity-50 disabled:opacity-50">{loading ? 'Updating...' : 'Update Listing'}
                 </button>
                 {
                     error && <p className="text-red-500 text-sm">{error}</p>

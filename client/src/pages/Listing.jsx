@@ -106,7 +106,7 @@ const Listing = () => {
                         {
                             listing.offer && (
                             <p className="bg-red-700 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                                PHP {+listing.regularPrice - +listing.discountedPrice} OFF
+                                PHP {(+listing.regularPrice - +listing.discountedPrice).toLocaleString('en-US')} OFF
                             </p>)
                         }
                     </div>
